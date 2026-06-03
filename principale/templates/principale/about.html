@@ -1,0 +1,205 @@
+{% extends 'principale/base.html' %}
+
+{% block title %}À propos - Kasa{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero-about">
+        <div class="container hero-about-content">
+            <h1 class="hero-about-title">Redéfinir la réservation de logements courte durée en Guinée.</h1>
+            <p class="hero-about-subtitle">Une expérience moderne, fluide et premium pour vos séjours.</p>
+        </div>
+    </section>
+
+    <!-- Notre Vision -->
+    <section class="section">
+        <div class="container container-narrow">
+            <div class="section-header">
+                <h2 class="section-title">Notre vision</h2>
+            </div>
+            <p style="font-size: 1.25rem; line-height: 1.9; color: var(--color-gray-dark); margin-bottom: var(--spacing-lg);">
+                Kasa réinvente la façon dont vous réservez des logements en Guinée. Nous croyons en une réservation moderne, une expérience fluide et des logements de qualité exceptionnelle.
+            </p>
+            <p style="font-size: 1.25rem; line-height: 1.9; color: var(--color-gray-dark);">
+                Notre mission est simple : offrir simplicité et confiance à chaque étape de votre voyage.
+            </p>
+        </div>
+    </section>
+
+    <!-- Pourquoi Kasa -->
+    <section class="section" style="background-color: var(--color-beige);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Pourquoi choisir Kasa</h2>
+            </div>
+            
+            <div class="grid grid-2">
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="zap"></i></div>
+                    <h3>Réservation rapide</h3>
+                    <p>Réservez en quelques clics, 24h/24 et 7j/7. Notre plateforme est conçue pour la vitesse et l'efficacité.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="check-circle"></i></div>
+                    <h3>Logements vérifiés</h3>
+                    <p>Chaque logement est inspecté et validé par notre équipe pour garantir qualité et sécurité.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="gem"></i></div>
+                    <h3>Expérience premium</h3>
+                    <p>Un design soigné, un service client réactif et des fonctionnalités pensées pour vous.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i data-lucide="headphones"></i></div>
+                    <h3>Support réactif</h3>
+                    <p>Notre équipe est disponible à tout moment pour répondre à vos questions et vous accompagner.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notre Approche -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Notre approche</h2>
+            </div>
+            
+            <div class="approach-grid">
+                <div class="approach-item">
+                    <div class="approach-number">01</div>
+                    <h3>Qualité de l'expérience</h3>
+                    <p>Chaque détail compte. Nous optimisons chaque interaction pour une expérience utilisateur exceptionnelle.</p>
+                </div>
+                
+                <div class="approach-item">
+                    <div class="approach-number">02</div>
+                    <h3>Design moderne</h3>
+                    <p>Une interface intuitive et élégante qui rend la réservation simple et agréable.</p>
+                </div>
+                
+                <div class="approach-item">
+                    <div class="approach-number">03</div>
+                    <h3>Logements sélectionnés</h3>
+                    <p>Une collection curée de logements premium répondant aux standards les plus élevés.</p>
+                </div>
+                
+                <div class="approach-item">
+                    <div class="approach-number">04</div>
+                    <h3>Confort et simplicité</h3>
+                    <p>Parce que voyager devrait être facile, nous supprimons la complexité de l'équation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="section" style="background-color: var(--color-black); color: var(--color-white);">
+        <div class="container text-center">
+            <h2 style="color: var(--color-white); margin-bottom: var(--spacing-md); font-size: 2.5rem;">Prêt à découvrir Kasa ?</h2>
+            <p style="color: var(--color-gray-medium); margin-bottom: var(--spacing-xl); font-size: 1.25rem;">Explorez notre collection de logements premium en Guinée.</p>
+            <a href="{% url 'listings' %}" class="btn btn-primary btn-large">Découvrir les logements</a>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.hero-about {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(17, 17, 17, 0.5), rgba(17, 17, 17, 0.5)), url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&h=1080&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: var(--spacing-3xl) 0;
+}
+
+.hero-about-content {
+    text-align: center;
+    max-width: 1000px;
+}
+
+.hero-about-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-white);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.2;
+}
+
+.hero-about-subtitle {
+    font-size: 1.5rem;
+    color: var(--color-white);
+    font-weight: 300;
+}
+
+.feature-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.feature-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-8px);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-terracotta);
+}
+
+.feature-card h3 {
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.5rem;
+}
+
+.feature-card p {
+    color: var(--color-gray-dark);
+    line-height: 1.7;
+}
+
+.approach-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2xl);
+}
+
+.approach-item {
+    padding: var(--spacing-lg);
+    border-left: 3px solid var(--color-terracotta);
+}
+
+.approach-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-terracotta);
+    margin-bottom: var(--spacing-sm);
+    opacity: 0.3;
+}
+
+.approach-item h3 {
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.25rem;
+}
+
+.approach-item p {
+    color: var(--color-gray-dark);
+    line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+    .approach-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}

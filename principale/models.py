@@ -63,11 +63,9 @@ class Reservation(models.Model):
         VALIDATIONS MÉTIER (RG-03 et RG-04)
         """
 
-        # RG-03 : date de départ doit être après date d'arrivée
         if self.date_depart <= self.date_arrivee:
             raise ValidationError("La date de départ doit être après la date d'arrivée.")
 
-        # RG-04 : éviter les chevauchements de réservations confirmées
         if self.logement_id:
             conflits = Reservation.objects.filter(
                 logement=self.logement,
@@ -86,17 +84,12 @@ class Reservation(models.Model):
         permet de calculer automatiquement le montant total (RG-05)
         """
 
-        # Calcul du nombre de nuits
         if self.date_arrivee and self.date_depart:
             nb_nuits = (self.date_depart - self.date_arrivee).days
-
-            # calcul du prix total basé sur le prix du logement
             if self.logement:
                 self.montant_total = nb_nuits * self.logement.prix_par_nuit
 
-        # Validation avant sauvegarde
         self.full_clean()
-
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -107,11 +100,10 @@ class ImageLogement(models.Model):
     logement = models.ForeignKey(
         Logement,
         on_delete=models.CASCADE,
-        related_name="images"
+        related_name='images'
     )
-
-    # Image stockée dans MEDIA/logements/
     image = models.ImageField(upload_to='logements/')
+    description = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
-        return f"Image de {self.logement}"
+        return f"Image {self.pk} de {self.logement}"

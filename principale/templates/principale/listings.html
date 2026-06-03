@@ -1,0 +1,92 @@
+{% extends 'principale/base.html' %}
+
+{% block title %}Nos Logements - Kasa{% endblock %}
+
+{% block content %}
+    <!-- Header -->
+    <section class="listings-header">
+        <div class="container">
+            <h1>Tous nos logements</h1>
+            <p style="color: var(--color-gray-dark); margin-top: var(--spacing-sm);">Découvrez notre sélection de logements de qualité en Guinée</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <form action="{% url 'listings' %}" method="get" class="search-panel" style="margin-bottom: var(--spacing-xl);">
+                <div class="search-grid">
+                    <div class="form-group">
+                        <label class="form-label">Recherche</label>
+                        <input type="search" name="q" class="form-input" value="{{ search_query }}" placeholder="Ville, quartier ou mot-clé">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Localisation</label>
+                        <input type="text" name="ville" class="form-input" value="{{ ville }}" placeholder="Ex : Conakry">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Prix min</label>
+                        <input type="number" name="min_price" class="form-input" value="{{ min_price }}" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Prix max</label>
+                        <input type="number" name="max_price" class="form-input" value="{{ max_price }}" placeholder="100000">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top: var(--spacing-md);">Filtrer</button>
+            </form>
+
+            <div class="filters">
+                <button class="filter-btn active">Tous</button>
+                <button class="filter-btn">Appartements</button>
+                <button class="filter-btn">Villas</button>
+                <button class="filter-btn">Studios</button>
+                <button class="filter-btn">Maisons</button>
+                <button class="filter-btn">Vue mer</button>
+                <button class="filter-btn">Piscine</button>
+                <button class="filter-btn">WiFi</button>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid grid-3">
+                {% for listing in listings %}
+                <div class="card">
+                    {% with images=listing.images.all %}
+                        {% if images %}
+                            <img src="{{ images.0.image.url }}" alt="{{ listing.titre }}" class="card-image">
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop" alt="{{ listing.titre }}" class="card-image">
+                        {% endif %}
+                    {% endwith %}
+                    <div class="card-content">
+                        <h3 class="card-title">{{ listing.titre }}</h3>
+                        <p class="card-location">{{ listing.ville }}, Guinée</p>
+                        <div class="card-rating">
+                            <span>★ 4.9</span>
+                            <span>(127 avis)</span>
+                        </div>
+                        <p class="card-price">{{ listing.prix_par_nuit }} GNF / nuit</p>
+                        <a href="{% url 'listing_detail' listing.id %}" class="btn btn-outline" style="width: 100%; margin-top: var(--spacing-sm);">Voir détails</a>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="grid-column: 1 / -1; text-align: center; color: var(--color-gray-medium);">Aucun logement disponible pour le moment.</p>
+                {% endfor %}
+            </div>
+
+            <div class="text-center" style="margin-top: var(--spacing-xl);">
+                <button class="btn btn-outline">Charger plus de logements</button>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+</script>
+{% endblock %}

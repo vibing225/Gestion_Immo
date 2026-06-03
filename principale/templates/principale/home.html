@@ -1,0 +1,172 @@
+{% extends 'principale/base.html' %}
+
+{% block title %}Kasa - Logements de courte durée en Guinée{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content fade-in">
+            <h1 class="hero-title">Trouvez votre logement idéal en Guinée</h1>
+            <p class="hero-subtitle">Des appartements modernes et confortables pour vos séjours de courte durée</p>
+            
+            <form class="search-bar" action="{% url 'listings' %}" method="GET">
+                <input type="text" class="search-input" placeholder="Où voulez-vous aller ?" name="location">
+                <input type="date" class="search-input" name="check_in">
+                <input type="date" class="search-input" name="check_out">
+                <button type="submit" class="search-btn">Rechercher</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">Qu'est-ce que Kasa ?</h2>
+                    <p>Kasa est la plateforme de référence pour les locations de courte durée en Guinée. Nous connectons les voyageurs avec des hôtes de confiance pour des séjours inoubliables.</p>
+                    <p>Notre mission est de rendre l'accès aux logements de qualité simple, sûr et abordable pour tous, que vous soyez en voyage d'affaires ou en vacances.</p>
+                    <p>Comment ça marche ? Parcourez notre catalogue de logements vérifiés, choisissez celui qui correspond à vos besoins, et réservez en quelques clics. C'est simple, rapide et sécurisé.</p>
+                    
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><i data-lucide="check"></i></div>
+                            <span>Logements vérifiés</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><i data-lucide="shield-check"></i></div>
+                            <span>Paiement sécurisé</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><i data-lucide="headphones"></i></div>
+                            <span>Support 24/7</span>
+                        </div>
+                        <div class="about-feature">
+                            <div class="about-feature-icon"><i data-lucide="calendar-check"></i></div>
+                            <span>Annulation flexible</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop" alt="Intérieur moderne" style="width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Listings -->
+    <section class="section featured">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Logements populaires</h2>
+                <p class="section-subtitle">Nos meilleures sélections pour vous</p>
+            </div>
+            
+            <div class="grid grid-3">
+                {% for listing in featured_listings %}
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop" alt="{{ listing.titre }}" class="card-image">
+                    <div class="card-content">
+                        <h3 class="card-title">{{ listing.titre }}</h3>
+                        <p class="card-location">{{ listing.ville }}, Guinée</p>
+                        <div class="card-rating">
+                            <span>★ 4.9</span>
+                            <span>(127 avis)</span>
+                        </div>
+                        <p class="card-price">{{ listing.prix_par_nuit }} GNF / nuit</p>
+                        <a href="{% url 'listing_detail' listing.id %}" class="btn btn-outline" style="width: 100%; margin-top: var(--spacing-sm);">Voir détails</a>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="grid-column: 1 / -1; text-align: center; color: var(--color-gray-medium);">Aucun logement disponible pour le moment.</p>
+                {% endfor %}
+            </div>
+            
+            <div class="text-center" style="margin-top: var(--spacing-xl);">
+                <a href="{% url 'listings' %}" class="btn btn-secondary btn-large">Voir tous les logements</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq">
+        <div class="container container-narrow">
+            <div class="section-header">
+                <h2 class="section-title">Questions fréquentes</h2>
+                <p class="section-subtitle">Tout ce que vous devez savoir sur Kasa</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Comment fonctionne Kasa ?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Kasa vous permet de rechercher et de réserver des logements de courte durée en Guinée. Parcourez notre catalogue, choisissez le logement qui vous convient, et réservez en quelques clics.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Les logements sont-ils vérifiés ?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Oui, tous nos logements sont vérifiés par notre équipe pour garantir leur qualité et leur conformité avec nos standards de sécurité.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Comment annuler une réservation ?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Vous pouvez annuler votre réservation depuis votre compte personnel. La politique d'annulation dépend du logement choisi et est indiquée lors de la réservation.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Le paiement est-il sécurisé ?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolument. Nous utilisons des technologies de cryptage de pointe pour protéger vos informations bancaires. Le paiement n'est débloqué qu'après votre arrivée.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Puis-je devenir hôte sur Kasa ?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Oui ! Si vous avez un logement à louer pour de courtes durées, inscrivez-vous comme hôte et commencez à générer des revenus dès aujourd'hui.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" style="background-color: var(--color-black); color: var(--color-white);">
+        <div class="container text-center">
+            <h2 style="color: var(--color-white); margin-bottom: var(--spacing-md);">Prêt à trouver votre logement idéal ?</h2>
+            <p style="color: var(--color-gray-medium); margin-bottom: var(--spacing-xl);">Rejoignez des milliers de voyageurs satisfaits</p>
+            <a href="{% url 'listings' %}" class="btn btn-primary btn-large">Commencer maintenant</a>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.parentElement;
+            faqItem.classList.toggle('active');
+        });
+    });
+</script>
+{% endblock %}
