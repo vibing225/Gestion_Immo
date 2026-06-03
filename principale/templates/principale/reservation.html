@@ -1,0 +1,408 @@
+{% extends 'principale/base.html' %}
+
+{% block title %}Réservation - Kasa{% endblock %}
+
+{% block content %}
+    <section class="reservation-header">
+        <div class="container">
+            <h1>Finaliser votre réservation</h1>
+            <p style="color: var(--color-gray-dark); margin-top: var(--spacing-sm);">{{ listing.titre }} – {{ listing.adresse }}, {{ listing.ville }}</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="reservation-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <span>Dates</span>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <span>Vos infos</span>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <span>Paiement</span>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <span>Résumé</span>
+                </div>
+            </div>
+
+            <div class="reservation-grid">
+                <div class="reservation-form">
+                    <form action="{% url 'reservation' %}" method="POST" id="reservationWizard">
+                        {% csrf_token %}
+                        {{ form.logement_id }}
+                        <div class="step-notice" id="stepNotice" aria-live="polite"></div>
+                        {% if form.non_field_errors %}
+                            <div class="form-error">{{ form.non_field_errors }}</div>
+                        {% endif %}
+
+                        <div class="step-section active" data-section="1">
+                            <h2>1. Choisissez vos dates</h2>
+
+                            <div class="form-group">
+                                <label class="form-label">Date d'arrivée</label>
+                                {{ form.date_arrivee }}
+                                {{ form.date_arrivee.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Date de départ</label>
+                                {{ form.date_depart }}
+                                {{ form.date_depart.errors }}
+                            </div>
+
+                            <div class="step-buttons">
+                                <button type="button" class="btn btn-secondary btn-step-next">Suivant</button>
+                            </div>
+                        </div>
+
+                        <div class="step-section" data-section="2">
+                            <h2>2. Entrez vos informations</h2>
+
+                            <div class="form-group">
+                                <label class="form-label">Nom complet</label>
+                                {{ form.nom }}
+                                {{ form.nom.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                {{ form.email }}
+                                {{ form.email.errors }}
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Téléphone</label>
+                                {{ form.telephone }}
+                                {{ form.telephone.errors }}
+                            </div>
+
+                            <div class="step-buttons">
+                                <button type="button" class="btn btn-outline btn-step-prev">Retour</button>
+                                <button type="button" class="btn btn-secondary btn-step-next">Suivant</button>
+                            </div>
+                        </div>
+
+                        <div class="step-section" data-section="3">
+                            <h2>3. Informations de paiement</h2>
+
+                            <div class="form-group">
+                                <label class="form-label">Numéro de carte</label>
+                                {{ form.card_number }}
+                                {{ form.card_number.errors }}
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group half-width">
+                                    <label class="form-label">Expiration</label>
+                                    {{ form.card_expiry }}
+                                    {{ form.card_expiry.errors }}
+                                </div>
+                                <div class="form-group half-width">
+                                    <label class="form-label">CVC</label>
+                                    {{ form.card_cvc }}
+                                    {{ form.card_cvc.errors }}
+                                </div>
+                            </div>
+
+                            <div class="step-buttons">
+                                <button type="button" class="btn btn-outline btn-step-prev">Retour</button>
+                                <button type="button" class="btn btn-secondary btn-step-next">Suivant</button>
+                            </div>
+                        </div>
+
+                        <div class="step-section" data-section="4">
+                            <h2>4. Vérifiez et confirmez</h2>
+
+                            <div class="summary-card">
+                                <div class="summary-item">
+                                    <span>Logement</span>
+                                    <strong>{{ listing.titre }}</strong>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Adresse</span>
+                                    <strong>{{ listing.adresse }}, {{ listing.ville }}</strong>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Dates</span>
+                                    <strong id="summaryDates">-</strong>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Nombre de nuits</span>
+                                    <strong id="summaryNights">-</strong>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Nom du voyageur</span>
+                                    <strong id="summaryName">-</strong>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Email</span>
+                                    <strong id="summaryEmail">-</strong>
+                                </div>
+                                <div class="summary-item" style="border-top: 1px solid var(--color-gray-light); margin-top: var(--spacing-md); padding-top: var(--spacing-md);">
+                                    <span>Prix par nuit</span>
+                                    <strong>{{ listing.prix_par_nuit }} GNF</strong>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Sous-total</span>
+                                    <strong id="summarySubtotal">0 GNF</strong>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Frais de ménage</span>
+                                    <strong>25 000 GNF</strong>
+                                </div>
+                                <div class="summary-item">
+                                    <span>Frais de service</span>
+                                    <strong>15 000 GNF</strong>
+                                </div>
+                                <div class="summary-item total-row">
+                                    <span>Total estimé</span>
+                                    <strong id="summaryTotal">0 GNF</strong>
+                                </div>
+                            </div>
+
+                            <div class="step-buttons">
+                                <button type="button" class="btn btn-outline btn-step-prev">Retour</button>
+                                <button type="submit" class="btn btn-primary">Confirmer la réservation</button>
+                            </div>
+                        </div>
+                        <div class="loader-overlay hidden" id="reservationLoader">
+                            <div class="loader-panel">
+                                <div class="loader-title">Préparation de votre réservation…</div>
+                                <div class="loader-bar"><span></span></div>
+                                <p>Un instant, nous finalisons votre demande avant de l’envoyer.</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <aside class="reservation-summary">
+                    <h3>Récapitulatif du séjour</h3>
+                    <p>Avancez étape par étape pour confirmer votre réservation. Les informations de paiement sont utilisées uniquement pour vérification.</p>
+
+                    <div class="summary-item">
+                        <span>Logement</span>
+                        <strong>{{ listing.titre }}</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Adresse</span>
+                        <strong>{{ listing.adresse }}, {{ listing.ville }}</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Prix par nuit</span>
+                        <strong>{{ listing.prix_par_nuit }} GNF</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Conditions</span>
+                        <strong>Validation administrative requise</strong>
+                    </div>
+                    <div class="note-box">
+                        <p>Votre demande sera examinée par notre équipe. Une confirmation vous sera envoyée par email après validation.</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const wizard = document.getElementById('reservationWizard');
+        const sections = document.querySelectorAll('.step-section');
+        const steps = document.querySelectorAll('.reservation-steps .step');
+        const nextButtons = document.querySelectorAll('.btn-step-next');
+        const prevButtons = document.querySelectorAll('.btn-step-prev');
+        const dateArrivee = document.querySelector('#id_date_arrivee');
+        const dateDepart = document.querySelector('#id_date_depart');
+        const nameInput = document.querySelector('#id_nom');
+        const emailInput = document.querySelector('#id_email');
+        const summaryDates = document.querySelector('#summaryDates');
+        const summaryNights = document.querySelector('#summaryNights');
+        const summaryName = document.querySelector('#summaryName');
+        const summaryEmail = document.querySelector('#summaryEmail');
+        const summarySubtotal = document.querySelector('#summarySubtotal');
+        const summaryTotal = document.querySelector('#summaryTotal');
+        const pricePerNight = parseFloat('{{ listing.prix_par_nuit|floatformat:2 }}'.replace(',', '.')) || 0;
+
+        function activateStep(stepIndex) {
+            sections.forEach(section => {
+                section.classList.toggle('active', parseInt(section.dataset.section, 10) === stepIndex);
+            });
+            steps.forEach(stepEl => {
+                stepEl.classList.toggle('active', parseInt(stepEl.dataset.step, 10) === stepIndex);
+            });
+        }
+
+        function getCurrentStep() {
+            const activeSection = document.querySelector('.step-section.active');
+            return activeSection ? parseInt(activeSection.dataset.section, 10) : 1;
+        }
+
+        function calculateNights() {
+            if (!dateArrivee.value || !dateDepart.value) return 0;
+            const start = new Date(dateArrivee.value);
+            const end = new Date(dateDepart.value);
+            const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+            return diff > 0 ? diff : 0;
+        }
+
+        function updateSummary() {
+            const nights = calculateNights();
+            if (summaryDates) {
+                summaryDates.textContent = dateArrivee && dateDepart && dateArrivee.value && dateDepart.value ? `${dateArrivee.value} → ${dateDepart.value}` : '-';
+            }
+            if (summaryNights) {
+                summaryNights.textContent = nights ? `${nights} nuit${nights > 1 ? 's' : ''}` : '-';
+            }
+            if (summaryName) {
+                summaryName.textContent = nameInput ? nameInput.value.trim() || '-' : '-';
+            }
+            if (summaryEmail) {
+                summaryEmail.textContent = emailInput ? emailInput.value.trim() || '-' : '-';
+            }
+
+            if (summarySubtotal && summaryTotal) {
+                if (nights) {
+                    const subtotal = nights * pricePerNight;
+                    summarySubtotal.textContent = subtotal.toLocaleString('fr-FR') + ' GNF';
+                    summaryTotal.textContent = (subtotal + 25000 + 15000).toLocaleString('fr-FR') + ' GNF';
+                } else {
+                    summarySubtotal.textContent = '0 GNF';
+                    summaryTotal.textContent = '0 GNF';
+                }
+            }
+        }
+
+        const stepNotice = document.getElementById('stepNotice');
+        const loaderOverlay = document.getElementById('reservationLoader');
+        const loaderProgress = loaderOverlay ? loaderOverlay.querySelector('.loader-bar span') : null;
+
+        function showNotice(message, kind = 'error') {
+            if (!stepNotice) return;
+            stepNotice.textContent = message;
+            stepNotice.classList.remove('notice-success', 'notice-info', 'notice-error');
+            stepNotice.classList.add(`notice-${kind}`);
+            stepNotice.classList.add('visible');
+        }
+
+        function hideNotice() {
+            if (!stepNotice) return;
+            stepNotice.textContent = '';
+            stepNotice.classList.remove('visible', 'notice-success', 'notice-info', 'notice-error');
+        }
+
+        function validateStep(stepIndex) {
+            let valid = true;
+            const section = document.querySelector(`.step-section[data-section="${stepIndex}"]`);
+            if (!section) {
+                return false;
+            }
+
+            const fields = section.querySelectorAll('input, select, textarea');
+            fields.forEach(field => {
+                if (field.type === 'hidden' || field.disabled) {
+                    return;
+                }
+
+                field.style.borderColor = '#E5E5E5';
+                if (field.hasAttribute('required') && !field.value.trim()) {
+                    valid = false;
+                    field.style.borderColor = '#C46A4A';
+                }
+            });
+
+            if (stepIndex === 1) {
+                const nights = calculateNights();
+                if (!dateArrivee.value || !dateDepart.value || nights <= 0) {
+                    valid = false;
+                    if (dateArrivee) {
+                        dateArrivee.style.borderColor = '#C46A4A';
+                    }
+                    if (dateDepart) {
+                        dateDepart.style.borderColor = '#C46A4A';
+                    }
+                }
+            }
+
+            if (!valid) {
+                if (stepIndex === 1) {
+                    showNotice('Veuillez compléter des dates valides : la date de départ doit être après la date d’arrivée.', 'error');
+                } else if (stepIndex === 2) {
+                    showNotice('Merci de renseigner votre nom, email et téléphone pour continuer.', 'error');
+                } else if (stepIndex === 3) {
+                    showNotice('Merci de compléter les informations de paiement pour finaliser.', 'error');
+                } else {
+                    showNotice('Certaines informations sont manquantes ou invalides.', 'error');
+                }
+            }
+
+            return valid;
+        }
+
+        function showLoader() {
+            if (!loaderOverlay || !loaderProgress) return;
+            loaderOverlay.classList.remove('hidden');
+            loaderProgress.style.width = '0%';
+
+            setTimeout(() => loaderProgress.style.width = '45%', 100);
+            setTimeout(() => loaderProgress.style.width = '80%', 1500);
+            setTimeout(() => loaderProgress.style.width = '100%', 2400);
+            setTimeout(() => wizard.submit(), 2600);
+        }
+
+        function findErrorSection() {
+            const errorElement = wizard.querySelector('.errorlist');
+            if (!errorElement) return 1;
+            const section = errorElement.closest('.step-section');
+            return section ? parseInt(section.dataset.section, 10) : 1;
+        }
+
+        nextButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const currentStep = getCurrentStep();
+                if (currentStep < sections.length) {
+                    const valid = validateStep(currentStep);
+                    if (valid) {
+                        hideNotice();
+                        activateStep(currentStep + 1);
+                        updateSummary();
+                        if (currentStep + 1 === 4) {
+                            showNotice('Toutes les informations sont prêtes. Vérifiez votre résumé avant de confirmer.', 'info');
+                        }
+                    }
+                }
+            });
+        });
+
+        prevButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const currentStep = getCurrentStep();
+                if (currentStep > 1) {
+                    activateStep(currentStep - 1);
+                }
+            });
+        });
+
+        wizard.addEventListener('submit', function(e) {
+            e.preventDefault();
+            hideNotice();
+            showLoader();
+        });
+
+        [dateArrivee, dateDepart, nameInput, emailInput].forEach(input => {
+            if (input) {
+                input.addEventListener('input', updateSummary);
+            }
+        });
+
+        activateStep(findErrorSection());
+        updateSummary();
+    });
+</script>
+{% endblock %}

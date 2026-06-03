@@ -1,0 +1,67 @@
+{% extends 'principale/base.html' %}
+
+{% block title %}Réservation confirmée - Kasa{% endblock %}
+
+{% block content %}
+    <section class="confirmation">
+        <div class="container">
+            <div class="confirmation-card fade-in">
+                <div class="confirmation-icon">✓</div>
+                <h1 class="confirmation-title">Réservation enregistrée !</h1>
+                {% if reservation %}
+                    <p class="confirmation-message">Votre demande a bien été créée et est en attente de validation.</p>
+
+                    <section class="confirmation-details">
+                        <h3>Détails de la réservation</h3>
+                        <div class="summary-item">
+                            <span>Numéro de réservation</span>
+                            <strong>{{ reservation.id }}</strong>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>Logement</span>
+                            <strong>{{ reservation.logement.titre }}</strong>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>Adresse</span>
+                            <strong>{{ reservation.logement.adresse }}, {{ reservation.logement.ville }}</strong>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>Arrivée</span>
+                            <strong>{{ reservation.date_arrivee }}</strong>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>Départ</span>
+                            <strong>{{ reservation.date_depart }}</strong>
+                        </div>
+
+                        <div class="summary-item confirmation-status">
+                            <span>Statut</span>
+                            <strong>{{ reservation.get_statut_display }}</strong>
+                        </div>
+                    </section>
+                {% else %}
+                    <p class="confirmation-message">Votre réservation a été effectuée avec succès. Vous recevrez un email de confirmation avec tous les détails.</p>
+                {% endif %}
+
+                <div style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background-color: var(--color-beige); border-radius: var(--radius-md); text-align: left;">
+                    <h4 style="margin-bottom: var(--spacing-sm);">Informations importantes</h4>
+                    <ul style="list-style: none; color: var(--color-gray-dark);">
+                        <li style="margin-bottom: var(--spacing-sm);">📧 Un email de confirmation sera envoyé à l'adresse fournie.</li>
+                        <li style="margin-bottom: var(--spacing-sm);">🔑 Les instructions d'accès vous seront communiquées après validation.</li>
+                        <li style="margin-bottom: var(--spacing-sm);">📞 Pour toute question, contactez notre support disponible 24/7.</li>
+                        <li>📋 Annulation gratuite jusqu'à 48h avant l'arrivée.</li>
+                    </ul>
+                </div>
+
+                <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); justify-content: center; flex-wrap: wrap;">
+                    <a href="{% url 'home' %}" class="btn btn-secondary">Retour à l'accueil</a>
+                    <a href="{% url 'listings' %}" class="btn btn-outline">Voir d'autres logements</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
