@@ -1,0 +1,68 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Logements{% endblock %}
+{% block page_title %}Logements{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h2><i class="fa-solid fa-building" style="color:#C46A4A;margin-right:8px;"></i>Tous les logements</h2>
+    <a href="{% url 'dashboard:logement_ajouter' %}" class="btn btn-primary">
+      <i class="fa-solid fa-plus"></i> Ajouter
+    </a>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Titre</th>
+          <th>Ville</th>
+          <th>Prix / nuit</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for l in logements %}
+        <tr>
+          <td>
+            {% with l.images.first as img %}
+              {% if img %}
+                <img src="{{ img.image.url }}" alt="{{ l.titre }}" style="width:56px;height:42px;object-fit:cover;border-radius:8px;"/>
+              {% else %}
+                <div style="width:56px;height:42px;background:#E8DCCF;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                  <i class="fa-solid fa-image" style="color:#C46A4A;font-size:1.1rem;"></i>
+                </div>
+              {% endif %}
+            {% endwith %}
+          </td>
+          <td><strong>{{ l.titre }}</strong></td>
+          <td>{{ l.ville }}</td>
+          <td>{{ l.prix_par_nuit }} €</td>
+          <td>
+            {% if l.disponible %}
+              <span class="badge badge-dispo">Disponible</span>
+            {% else %}
+              <span class="badge badge-indispo">Indisponible</span>
+            {% endif %}
+          </td>
+          <td>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <a href="{% url 'dashboard:logement_modifier' l.pk %}" class="btn btn-secondary btn-sm">
+                <i class="fa-solid fa-pen"></i>
+              </a>
+              <form method="post" action="{% url 'dashboard:logement_supprimer' l.pk %}" onsubmit="return confirm('Supprimer ce logement ?')">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" style="text-align:center;color:rgba(0,0,0,0.35);padding:32px;">Aucun logement enregistré.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
