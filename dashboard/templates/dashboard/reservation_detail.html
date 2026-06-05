@@ -1,0 +1,87 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Détail réservation{% endblock %}
+{% block page_title %}Détail de la réservation{% endblock %}
+
+{% block content %}
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;">
+
+  <div class="card">
+    <div class="card-header">
+      <h2><i class="fa-solid fa-user" style="color:#C46A4A;margin-right:8px;"></i>Client</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div>
+        <p style="font-size:0.75rem;color:rgba(0,0,0,0.4);text-transform:uppercase;letter-spacing:0.5px;">Nom</p>
+        <p style="font-weight:600;">{{ reservation.client.nom }}</p>
+      </div>
+      <div>
+        <p style="font-size:0.75rem;color:rgba(0,0,0,0.4);text-transform:uppercase;letter-spacing:0.5px;">Email</p>
+        <p>{{ reservation.client.email }}</p>
+      </div>
+      <div>
+        <p style="font-size:0.75rem;color:rgba(0,0,0,0.4);text-transform:uppercase;letter-spacing:0.5px;">Téléphone</p>
+        <p>{{ reservation.client.telephone }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h2><i class="fa-solid fa-building" style="color:#C46A4A;margin-right:8px;"></i>Logement</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div>
+        <p style="font-size:0.75rem;color:rgba(0,0,0,0.4);text-transform:uppercase;letter-spacing:0.5px;">Titre</p>
+        <p style="font-weight:600;">{{ reservation.logement.titre }}</p>
+      </div>
+      <div>
+        <p style="font-size:0.75rem;color:rgba(0,0,0,0.4);text-transform:uppercase;letter-spacing:0.5px;">Ville</p>
+        <p>{{ reservation.logement.ville }}</p>
+      </div>
+      <div>
+        <p style="font-size:0.75rem;color:rgba(0,0,0,0.4);text-transform:uppercase;letter-spacing:0.5px;">Prix / nuit</p>
+        <p>{{ reservation.logement.prix_par_nuit }} €</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="grid-column:1/-1;">
+    <div class="card-header">
+      <h2><i class="fa-solid fa-calendar" style="color:#C46A4A;margin-right:8px;"></i>Séjour</h2>
+      <div>
+        {% if reservation.statut == 'EN_ATTENTE' %}<span class="badge badge-attente">En attente</span>
+        {% elif reservation.statut == 'CONFIRMEE' %}<span class="badge badge-confirme">Confirmée</span>
+        {% else %}<span class="badge badge-refuse">Annulée</span>{% endif %}
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:28px;">
+      <div>
+        <p style="font-size:0.75rem;color:rgba(0,0,0,0.4);text-transform:uppercase;letter-spacing:0.5px;">Arrivée</p>
+        <p style="font-weight:600;font-size:1.1rem;">{{ reservation.date_arrivee }}</p>
+      </div>
+      <div>
+        <p style="font-size:0.75rem;color:rgba(0,0,0,0.4);text-transform:uppercase;letter-spacing:0.5px;">Départ</p>
+        <p style="font-weight:600;font-size:1.1rem;">{{ reservation.date_depart }}</p>
+      </div>
+      <div>
+        <p style="font-size:0.75rem;color:rgba(0,0,0,0.4);text-transform:uppercase;letter-spacing:0.5px;">Montant total</p>
+        <p style="font-weight:700;font-size:1.3rem;color:#C46A4A;">{% if reservation.montant_total %}{{ reservation.montant_total }} €{% else %}—{% endif %}</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      {% if reservation.statut == 'EN_ATTENTE' %}
+      <a href="{% url 'dashboard:reservation_confirmer' reservation.pk %}" class="btn btn-success">
+        <i class="fa-solid fa-check"></i> Confirmer
+      </a>
+      <a href="{% url 'dashboard:reservation_annuler' reservation.pk %}" class="btn btn-danger">
+        <i class="fa-solid fa-xmark"></i> Annuler
+      </a>
+      {% endif %}
+      <a href="{% url 'dashboard:reservations' %}" class="btn btn-secondary">
+        <i class="fa-solid fa-arrow-left"></i> Retour
+      </a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

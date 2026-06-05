@@ -1,0 +1,67 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Réservations{% endblock %}
+{% block page_title %}Réservations{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h2><i class="fa-solid fa-calendar-check" style="color:#C46A4A;margin-right:8px;"></i>Toutes les réservations</h2>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Email</th>
+          <th>Logement</th>
+          <th>Arrivée</th>
+          <th>Départ</th>
+          <th>Montant</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in reservations %}
+        <tr>
+          <td><strong>{{ r.client.nom }}</strong><br/><small style="color:rgba(0,0,0,0.4);">{{ r.client.telephone }}</small></td>
+          <td>{{ r.client.email }}</td>
+          <td>{{ r.logement.titre }}</td>
+          <td>{{ r.date_arrivee }}</td>
+          <td>{{ r.date_depart }}</td>
+          <td>{% if r.montant_total %}{{ r.montant_total }} €{% else %}—{% endif %}</td>
+          <td>
+            {% if r.statut == 'EN_ATTENTE' %}<span class="badge badge-attente">En attente</span>
+            {% elif r.statut == 'CONFIRMEE' %}<span class="badge badge-confirme">Confirmée</span>
+            {% else %}<span class="badge badge-refuse">Annulée</span>{% endif %}
+          </td>
+          <td>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <a href="{% url 'dashboard:reservation_detail' r.pk %}" class="btn btn-secondary btn-sm" title="Détail">
+                <i class="fa-solid fa-eye"></i>
+              </a>
+              {% if r.statut == 'EN_ATTENTE' %}
+              <a href="{% url 'dashboard:reservation_confirmer' r.pk %}" class="btn btn-success btn-sm" title="Confirmer">
+                <i class="fa-solid fa-check"></i>
+              </a>
+              <a href="{% url 'dashboard:reservation_annuler' r.pk %}" class="btn btn-danger btn-sm" title="Annuler">
+                <i class="fa-solid fa-xmark"></i>
+              </a>
+              {% endif %}
+              <form method="post" action="{% url 'dashboard:reservation_supprimer' r.pk %}" onsubmit="return confirm('Supprimer cette réservation ?')">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm" title="Supprimer">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8" style="text-align:center;color:rgba(0,0,0,0.35);padding:32px;">Aucune réservation.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

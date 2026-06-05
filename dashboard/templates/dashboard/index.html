@@ -1,0 +1,101 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Tableau de bord{% endblock %}
+{% block page_title %}Tableau de bord{% endblock %}
+
+{% block content %}
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon" style="background:#fff0eb;">
+      <i class="fa-solid fa-building" style="color:#C46A4A;"></i>
+    </div>
+    <div class="stat-info">
+      <p>Logements</p>
+      <h3>{{ total_logements }}</h3>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon" style="background:#ede9fe;">
+      <i class="fa-solid fa-calendar-check" style="color:#7c3aed;"></i>
+    </div>
+    <div class="stat-info">
+      <p>Total réservations</p>
+      <h3>{{ total_reservations }}</h3>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon" style="background:#fef3c7;">
+      <i class="fa-solid fa-clock" style="color:#d97706;"></i>
+    </div>
+    <div class="stat-info">
+      <p>En attente</p>
+      <h3>{{ en_attente }}</h3>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon" style="background:#d1fae5;">
+      <i class="fa-solid fa-circle-check" style="color:#059669;"></i>
+    </div>
+    <div class="stat-info">
+      <p>Confirmées</p>
+      <h3>{{ confirmees }}</h3>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon" style="background:#fee2e2;">
+      <i class="fa-solid fa-circle-xmark" style="color:#dc2626;"></i>
+    </div>
+    <div class="stat-info">
+      <p>Annulées</p>
+      <h3>{{ annulees }}</h3>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon" style="background:#ecfdf5;">
+      <i class="fa-solid fa-euro-sign" style="color:#059669;"></i>
+    </div>
+    <div class="stat-info">
+      <p>Revenus estimés</p>
+      <h3>{{ revenus|floatformat:0 }} €</h3>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2><i class="fa-solid fa-clock-rotate-left" style="color:#C46A4A;margin-right:8px;"></i>Dernières réservations</h2>
+    <a href="{% url 'dashboard:reservations' %}" class="btn btn-secondary btn-sm">Voir tout</a>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Logement</th>
+          <th>Arrivée</th>
+          <th>Départ</th>
+          <th>Montant</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in dernieres %}
+        <tr>
+          <td><strong>{{ r.client.nom }}</strong></td>
+          <td>{{ r.logement.titre }}</td>
+          <td>{{ r.date_arrivee }}</td>
+          <td>{{ r.date_depart }}</td>
+          <td>{% if r.montant_total %}{{ r.montant_total }} €{% else %}—{% endif %}</td>
+          <td>
+            {% if r.statut == 'EN_ATTENTE' %}<span class="badge badge-attente">En attente</span>
+            {% elif r.statut == 'CONFIRMEE' %}<span class="badge badge-confirme">Confirmée</span>
+            {% else %}<span class="badge badge-refuse">Annulée</span>{% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" style="text-align:center;color:rgba(0,0,0,0.35);padding:32px;">Aucune réservation pour le moment.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

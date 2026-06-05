@@ -1,0 +1,62 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}{% if logement %}Modifier{% else %}Ajouter{% endif %} un logement{% endblock %}
+{% block page_title %}{% if logement %}Modifier le logement{% else %}Nouveau logement{% endif %}{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:800px;">
+  <div class="card-header">
+    <h2>
+      <i class="fa-solid fa-{% if logement %}pen{% else %}plus{% endif %}" style="color:#C46A4A;margin-right:8px;"></i>
+      {% if logement %}Modifier « {{ logement.titre }} »{% else %}Ajouter un logement{% endif %}
+    </h2>
+    <a href="{% url 'dashboard:logements' %}" class="btn btn-secondary btn-sm">
+      <i class="fa-solid fa-arrow-left"></i> Retour
+    </a>
+  </div>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Titre</label>
+        <input type="text" name="titre" value="{{ logement.titre|default:'' }}" required/>
+      </div>
+      <div class="form-group">
+        <label>Ville</label>
+        <input type="text" name="ville" value="{{ logement.ville|default:'' }}" required/>
+      </div>
+      <div class="form-group full">
+        <label>Adresse</label>
+        <input type="text" name="adresse" value="{{ logement.adresse|default:'' }}" required/>
+      </div>
+      <div class="form-group full">
+        <label>Description</label>
+        <textarea name="description">{{ logement.description|default:'' }}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Prix par nuit (€)</label>
+        <input type="number" name="prix_par_nuit" value="{{ logement.prix_par_nuit|default:'' }}" step="0.01" min="0" required/>
+      </div>
+      <div class="form-group">
+        <label>Disponibilité</label>
+        <div class="toggle-wrap">
+          <input type="checkbox" name="disponible" id="disponible" {% if not logement or logement.disponible %}checked{% endif %}/>
+          <label for="disponible" style="text-transform:none;letter-spacing:0;font-size:0.9rem;font-weight:400;">Logement disponible</label>
+        </div>
+      </div>
+      <div class="form-group full">
+        <label>Images</label>
+        <input type="file" name="images" multiple accept="image/*" style="padding:10px;"/>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;margin-top:28px;">
+      <button type="submit" class="btn btn-primary">
+        <i class="fa-solid fa-floppy-disk"></i>
+        {% if logement %}Enregistrer les modifications{% else %}Créer le logement{% endif %}
+      </button>
+      <a href="{% url 'dashboard:logements' %}" class="btn btn-secondary">Annuler</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
