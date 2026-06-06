@@ -7,32 +7,47 @@
     <section class="listings-header">
         <div class="container">
             <h1>Tous nos logements</h1>
-            <p style="color: var(--color-gray-dark); margin-top: var(--spacing-sm);">Découvrez notre sélection de logements de qualité en Guinée</p>
+            <p style="color: var(--color-text-light); margin-top: var(--space-3);">Découvrez notre sélection de logements de qualité en Guinée</p>
         </div>
     </section>
 
     <section class="section">
         <div class="container">
-            <form action="{% url 'listings' %}" method="get" class="search-panel" style="margin-bottom: var(--spacing-xl);">
-                <div class="search-grid">
+            <form action="{% url 'listings' %}" method="get" class="search-panel" style="margin-bottom: var(--space-12); padding: var(--space-6); background: white; border-radius: var(--radius-xl); box-shadow: var(--shadow-md); border: 1px solid var(--color-light-dark);">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
                     <div class="form-group">
-                        <label class="form-label">Recherche</label>
+                        <label class="form-label">
+                            <i data-lucide="search" style="width: 16px; height: 16px; margin-right: var(--space-2);"></i>
+                            Recherche
+                        </label>
                         <input type="search" name="q" class="form-input" value="{{ search_query }}" placeholder="Ville, quartier ou mot-clé">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Localisation</label>
+                        <label class="form-label">
+                            <i data-lucide="map-pin" style="width: 16px; height: 16px; margin-right: var(--space-2);"></i>
+                            Localisation
+                        </label>
                         <input type="text" name="ville" class="form-input" value="{{ ville }}" placeholder="Ex : Conakry">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Prix min</label>
+                        <label class="form-label">
+                            <i data-lucide="tag" style="width: 16px; height: 16px; margin-right: var(--space-2);"></i>
+                            Prix min
+                        </label>
                         <input type="number" name="min_price" class="form-input" value="{{ min_price }}" placeholder="0">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Prix max</label>
+                        <label class="form-label">
+                            <i data-lucide="tag" style="width: 16px; height: 16px; margin-right: var(--space-2);"></i>
+                            Prix max
+                        </label>
                         <input type="number" name="max_price" class="form-input" value="{{ max_price }}" placeholder="100000">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary" style="margin-top: var(--spacing-md);">Filtrer</button>
+                <button type="submit" class="btn btn-primary" style="margin-top: var(--space-6);">
+                    <i data-lucide="filter" style="width: 18px; height: 18px; margin-right: var(--space-2);"></i>
+                    Filtrer
+                </button>
             </form>
 
             <div class="filters">
@@ -59,22 +74,28 @@
                     {% endwith %}
                     <div class="card-content">
                         <h3 class="card-title">{{ listing.titre }}</h3>
-                        <p class="card-location">{{ listing.ville }}, Guinée</p>
+                        <p class="card-location">
+                            <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i>
+                            {{ listing.ville }}, Guinée
+                        </p>
                         <div class="card-rating">
                             <span>★ 4.9</span>
                             <span>(127 avis)</span>
                         </div>
                         <p class="card-price">{{ listing.prix_par_nuit }} GNF / nuit</p>
-                        <a href="{% url 'listing_detail' listing.id %}" class="btn btn-outline" style="width: 100%; margin-top: var(--spacing-sm);">Voir détails</a>
+                        <a href="{% url 'listing_detail' listing.id %}" class="btn btn-outline" style="width: 100%;">Voir détails</a>
                     </div>
                 </div>
                 {% empty %}
-                <p style="grid-column: 1 / -1; text-align: center; color: var(--color-gray-medium);">Aucun logement disponible pour le moment.</p>
+                <p style="grid-column: 1 / -1; text-align: center; color: var(--color-text-light); padding: var(--space-12);">Aucun logement disponible pour le moment.</p>
                 {% endfor %}
             </div>
 
-            <div class="text-center" style="margin-top: var(--spacing-xl);">
-                <button class="btn btn-outline">Charger plus de logements</button>
+            <div class="text-center" style="margin-top: var(--space-12);">
+                <button class="btn btn-outline">
+                    <i data-lucide="refresh-cw" style="width: 18px; height: 18px; margin-right: var(--space-2);"></i>
+                    Charger plus de logements
+                </button>
             </div>
         </div>
     </section>

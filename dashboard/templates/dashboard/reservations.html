@@ -29,7 +29,7 @@
           <td>{{ r.logement.titre }}</td>
           <td>{{ r.date_arrivee }}</td>
           <td>{{ r.date_depart }}</td>
-          <td>{% if r.montant_total %}{{ r.montant_total }} €{% else %}—{% endif %}</td>
+          <td>{% if r.montant_total %}{{ r.montant_total }} FG{% else %}—{% endif %}</td>
           <td>
             {% if r.statut == 'EN_ATTENTE' %}<span class="badge badge-attente">En attente</span>
             {% elif r.statut == 'CONFIRMEE' %}<span class="badge badge-confirme">Confirmée</span>

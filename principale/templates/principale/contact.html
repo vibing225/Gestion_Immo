@@ -47,7 +47,7 @@
     </section>
 
     <!-- Contact Form -->
-    <section class="section" style="background-color: var(--color-beige);">
+    <section class="section" style="background: linear-gradient(135deg, var(--color-light) 0%, var(--color-light-medium) 100%);">
         <div class="container">
             <div class="contact-layout">
                 <div class="contact-form-wrapper">
@@ -57,17 +57,26 @@
                     
                     <form class="contact-form">
                         <div class="form-group">
-                            <label class="form-label">Nom complet</label>
+                            <label class="form-label">
+                                <i data-lucide="user" style="width: 16px; height: 16px; margin-right: var(--space-2);"></i>
+                                Nom complet
+                            </label>
                             <input type="text" class="form-input" placeholder="Votre nom" required>
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">Email</label>
+                            <label class="form-label">
+                                <i data-lucide="mail" style="width: 16px; height: 16px; margin-right: var(--space-2);"></i>
+                                Email
+                            </label>
                             <input type="email" class="form-input" placeholder="votre@email.com" required>
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">Sujet</label>
+                            <label class="form-label">
+                                <i data-lucide="message-square" style="width: 16px; height: 16px; margin-right: var(--space-2);"></i>
+                                Sujet
+                            </label>
                             <select class="form-input">
                                 <option value="">Sélectionnez un sujet</option>
                                 <option value="reservation">Question sur une réservation</option>
@@ -79,20 +88,26 @@
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">Message</label>
+                            <label class="form-label">
+                                <i data-lucide="file-text" style="width: 16px; height: 16px; margin-right: var(--space-2);"></i>
+                                Message
+                            </label>
                             <textarea class="form-input" rows="6" placeholder="Votre message..." required></textarea>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">Envoyer le message</button>
+                        <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">
+                            <i data-lucide="send" style="width: 18px; height: 18px; margin-right: var(--space-2);"></i>
+                            Envoyer le message
+                        </button>
                     </form>
                 </div>
                 
                 <div class="contact-info-wrapper">
                     <div class="contact-info-card">
                         <h3>Préférez nous appeler ?</h3>
-                        <p style="color: var(--color-gray-dark); margin-bottom: var(--spacing-lg);">Notre équipe est disponible du lundi au dimanche pour répondre à toutes vos questions.</p>
-                        <a href="tel:+224621123456" class="btn btn-secondary" style="width: 100%; margin-bottom: var(--spacing-md);">
-                            <i data-lucide="phone" style="width: 20px; height: 20px; margin-right: var(--spacing-sm);"></i>
+                        <p style="color: var(--color-text-light); margin-bottom: var(--space-8);">Notre équipe est disponible du lundi au dimanche pour répondre à toutes vos questions.</p>
+                        <a href="tel:+224621123456" class="btn btn-secondary" style="width: 100%; margin-bottom: var(--space-4);">
+                            <i data-lucide="phone" style="width: 20px; height: 20px; margin-right: var(--space-2);"></i>
                             Appeler maintenant
                         </a>
                     </div>
@@ -111,7 +126,7 @@
             <div class="faq-item">
                 <div class="faq-question">
                     <span>Quels sont vos délais de réponse ?</span>
-                    <span>+</span>
+                    <i data-lucide="chevron-down" style="width: 20px; height: 20px;"></i>
                 </div>
                 <div class="faq-answer">
                     <p>Nous répondons généralement dans les 24 heures ouvrées. Pour les urgences, contactez-nous par téléphone.</p>
@@ -121,7 +136,7 @@
             <div class="faq-item">
                 <div class="faq-question">
                     <span>Comment modifier une réservation ?</span>
-                    <span>+</span>
+                    <i data-lucide="chevron-down" style="width: 20px; height: 20px;"></i>
                 </div>
                 <div class="faq-answer">
                     <p>Connectez-vous à votre compte et accédez à la section "Mes réservations". Vous pouvez modifier les dates jusqu'à 48h avant l'arrivée.</p>
@@ -131,7 +146,7 @@
             <div class="faq-item">
                 <div class="faq-question">
                     <span>Quelle est votre politique d'annulation ?</span>
-                    <span>+</span>
+                    <i data-lucide="chevron-down" style="width: 20px; height: 20px;"></i>
                 </div>
                 <div class="faq-answer">
                     <p>Annulation gratuite jusqu'à 48h avant l'arrivée. Après ce délai, la première nuit sera facturée.</p>
@@ -141,7 +156,7 @@
             <div class="faq-item">
                 <div class="faq-question">
                     <span>Comment vérifier les disponibilités ?</span>
-                    <span>+</span>
+                    <i data-lucide="chevron-down" style="width: 20px; height: 20px;"></i>
                 </div>
                 <div class="faq-answer">
                     <p>Les disponibilités sont mises à jour en temps réel sur chaque fiche logement. Sélectionnez vos dates pour voir si le logement est disponible.</p>
@@ -151,16 +166,16 @@
     </section>
 
     <!-- Location Section -->
-    <section class="section" style="background-color: var(--color-black); color: var(--color-white);">
+    <section class="section" style="background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-dark-light) 100%); color: white;">
         <div class="container">
             <div class="location-content">
                 <div>
-                    <h2 style="color: var(--color-white); margin-bottom: var(--spacing-lg); font-size: 2.5rem;">Conakry, Guinée</h2>
-                    <p style="color: var(--color-gray-medium); margin-bottom: var(--spacing-xl); font-size: 1.25rem; line-height: 1.8;">Notre équipe est basée au cœur de Conakry, prête à vous accueillir et à vous accompagner dans vos projets de location.</p>
+                    <h2 style="color: white; margin-bottom: var(--space-8); font-size: var(--text-4xl);">Conakry, Guinée</h2>
+                    <p style="color: var(--color-text-lighter); margin-bottom: var(--space-12); font-size: var(--text-xl); line-height: 1.8;">Notre équipe est basée au cœur de Conakry, prête à vous accueillir et à vous accompagner dans vos projets de location.</p>
                     <a href="{% url 'listings' %}" class="btn btn-primary">Explorer les logements</a>
                 </div>
                 <div class="location-visual">
-                    <div style="background: linear-gradient(135deg, var(--color-terracotta) 0%, #A85A3E 100%); height: 300px; border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; color: var(--color-white); font-size: 4rem;">
+                    <div style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); height: 300px; border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; box-shadow: var(--shadow-xl);">
                         <i data-lucide="map-pin" style="width: 80px; height: 80px;"></i>
                     </div>
                 </div>
@@ -176,11 +191,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(rgba(17, 17, 17, 0.6), rgba(17, 17, 17, 0.6)), url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1920&h=1080&fit=crop');
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.85) 0%, rgba(15, 52, 96, 0.75) 100%), url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1920&h=1080&fit=crop');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    padding: var(--spacing-3xl) 0;
+    padding: var(--space-24) 0;
 }
 
 .hero-contact-content {
@@ -190,111 +205,121 @@
 
 .hero-contact-title {
     font-size: clamp(2rem, 4vw, 3rem);
-    color: var(--color-white);
-    margin-bottom: var(--spacing-md);
+    color: white;
+    margin-bottom: var(--space-4);
     line-height: 1.2;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease;
 }
 
 .hero-contact-subtitle {
-    font-size: 1.25rem;
-    color: var(--color-white);
-    font-weight: 300;
+    font-size: var(--text-xl);
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+    animation: fadeInUp 0.8s ease 0.2s backwards;
 }
 
 .contact-cards-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-lg);
+    gap: var(--space-8);
 }
 
 .contact-card {
-    background-color: var(--color-white);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
     box-shadow: var(--shadow-sm);
     transition: all var(--transition-normal);
     text-align: center;
+    border: 1px solid var(--color-light-dark);
 }
 
 .contact-card:hover {
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-xl);
     transform: translateY(-8px);
+    border-color: var(--color-primary);
 }
 
 .contact-card-icon {
     font-size: 2.5rem;
-    margin-bottom: var(--spacing-md);
-    color: var(--color-terracotta);
+    margin-bottom: var(--space-4);
+    color: var(--color-primary);
 }
 
 .contact-card h3 {
-    margin-bottom: var(--spacing-sm);
-    font-size: 1.125rem;
+    margin-bottom: var(--space-3);
+    font-size: var(--text-lg);
+    color: var(--color-dark);
 }
 
 .contact-card-text {
-    color: var(--color-gray-dark);
+    color: var(--color-text-light);
     margin: 0;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
 }
 
 .contact-layout {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: var(--spacing-2xl);
+    gap: var(--space-12);
 }
 
 .contact-form-wrapper {
-    background-color: var(--color-white);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-2xl);
-    box-shadow: var(--shadow-md);
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--space-12);
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--color-light-dark);
 }
 
 .contact-form {
-    margin-top: var(--spacing-lg);
+    margin-top: var(--space-8);
 }
 
 .contact-form .form-group {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--space-6);
 }
 
 .contact-form .form-input {
-    padding: var(--spacing-md);
-    border: 2px solid var(--color-gray-light);
-    border-radius: var(--radius-md);
-    font-size: 1rem;
-    transition: all var(--transition-fast);
+    padding: var(--space-4);
+    border: 2px solid var(--color-light-dark);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-base);
+    transition: all var(--transition-base);
+    background: white;
 }
 
 .contact-form .form-input:focus {
     outline: none;
-    border-color: var(--color-terracotta);
-    box-shadow: 0 0 0 3px rgba(196, 106, 74, 0.1);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
 }
 
 .contact-info-wrapper {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg);
+    gap: var(--space-8);
 }
 
 .contact-info-card {
-    background-color: var(--color-white);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
-    box-shadow: var(--shadow-md);
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-xl);
     text-align: center;
+    border: 1px solid var(--color-light-dark);
 }
 
 .contact-info-card h3 {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--space-4);
+    color: var(--color-dark);
 }
 
 .location-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-2xl);
+    gap: var(--space-16);
     align-items: center;
 }
 
@@ -331,16 +356,22 @@
     document.querySelectorAll('.faq-question').forEach(question => {
         question.addEventListener('click', () => {
             const faqItem = question.parentElement;
+            const icon = question.querySelector('i');
             const isActive = faqItem.classList.contains('active');
             
             // Close all other items
             document.querySelectorAll('.faq-item').forEach(item => {
                 item.classList.remove('active');
+                const itemIcon = item.querySelector('.faq-question i');
+                if (itemIcon) {
+                    itemIcon.style.transform = 'rotate(0deg)';
+                }
             });
             
             // Toggle current item
             if (!isActive) {
                 faqItem.classList.add('active');
+                icon.style.transform = 'rotate(180deg)';
             }
         });
     });

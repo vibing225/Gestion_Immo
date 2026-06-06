@@ -1,16 +1,16 @@
 from decimal import Decimal, InvalidOperation
 
 from django.core.exceptions import ValidationError
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
 from .forms import ReservationRequestForm
-from .models import Client, Logement, Reservation
+from .models import Client, ImageLogement, Logement, Reservation
 
 
 def home(request):
-    featured_listings = Logement.objects.filter(disponible=True)[:3]
+    featured_listings = Logement.objects.filter(disponible=True).prefetch_related('images')[:3]
     return render(request, 'principale/home.html', {'featured_listings': featured_listings})
 
 
@@ -20,7 +20,7 @@ def listings(request):
     min_price = request.GET.get('min_price', '').strip()
     max_price = request.GET.get('max_price', '').strip()
 
-    all_listings = Logement.objects.filter(disponible=True)
+    all_listings = Logement.objects.filter(disponible=True).prefetch_related('images')
 
     if search_query:
         all_listings = all_listings.filter(
@@ -56,7 +56,7 @@ def listings(request):
 
 
 def listing_detail(request, listing_id):
-    listing = get_object_or_404(Logement, id=listing_id, disponible=True)
+    listing = get_object_or_404(Logement.objects.prefetch_related('images'), id=listing_id, disponible=True)
     return render(request, 'principale/listing_detail.html', {'listing': listing})
 
 

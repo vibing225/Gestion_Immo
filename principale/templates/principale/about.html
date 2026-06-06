@@ -17,17 +17,17 @@
             <div class="section-header">
                 <h2 class="section-title">Notre vision</h2>
             </div>
-            <p style="font-size: 1.25rem; line-height: 1.9; color: var(--color-gray-dark); margin-bottom: var(--spacing-lg);">
+            <p style="font-size: var(--text-xl); line-height: 1.9; color: var(--color-text-light); margin-bottom: var(--space-8);">
                 Kasa réinvente la façon dont vous réservez des logements en Guinée. Nous croyons en une réservation moderne, une expérience fluide et des logements de qualité exceptionnelle.
             </p>
-            <p style="font-size: 1.25rem; line-height: 1.9; color: var(--color-gray-dark);">
+            <p style="font-size: var(--text-xl); line-height: 1.9; color: var(--color-text-light);">
                 Notre mission est simple : offrir simplicité et confiance à chaque étape de votre voyage.
             </p>
         </div>
     </section>
 
     <!-- Pourquoi Kasa -->
-    <section class="section" style="background-color: var(--color-beige);">
+    <section class="section" style="background: linear-gradient(135deg, var(--color-light) 0%, var(--color-light-medium) 100%);">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Pourquoi choisir Kasa</h2>
@@ -97,10 +97,10 @@
     </section>
 
     <!-- CTA Final -->
-    <section class="section" style="background-color: var(--color-black); color: var(--color-white);">
+    <section class="section" style="background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-dark-light) 100%); color: white;">
         <div class="container text-center">
-            <h2 style="color: var(--color-white); margin-bottom: var(--spacing-md); font-size: 2.5rem;">Prêt à découvrir Kasa ?</h2>
-            <p style="color: var(--color-gray-medium); margin-bottom: var(--spacing-xl); font-size: 1.25rem;">Explorez notre collection de logements premium en Guinée.</p>
+            <h2 style="color: white; margin-bottom: var(--space-4); font-size: var(--text-4xl);">Prêt à découvrir Kasa ?</h2>
+            <p style="color: var(--color-text-lighter); margin-bottom: var(--space-12); font-size: var(--text-xl);">Explorez notre collection de logements premium en Guinée.</p>
             <a href="{% url 'listings' %}" class="btn btn-primary btn-large">Découvrir les logements</a>
         </div>
     </section>
@@ -113,11 +113,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(rgba(17, 17, 17, 0.5), rgba(17, 17, 17, 0.5)), url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&h=1080&fit=crop');
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.85) 0%, rgba(15, 52, 96, 0.75) 100%), url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&h=1080&fit=crop');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    padding: var(--spacing-3xl) 0;
+    padding: var(--space-24) 0;
 }
 
 .hero-about-content {
@@ -127,72 +127,87 @@
 
 .hero-about-title {
     font-size: clamp(2.5rem, 5vw, 4rem);
-    color: var(--color-white);
-    margin-bottom: var(--spacing-lg);
+    color: white;
+    margin-bottom: var(--space-8);
     line-height: 1.2;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease;
 }
 
 .hero-about-subtitle {
-    font-size: 1.5rem;
-    color: var(--color-white);
-    font-weight: 300;
+    font-size: var(--text-2xl);
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+    animation: fadeInUp 0.8s ease 0.2s backwards;
 }
 
 .feature-card {
-    background-color: var(--color-white);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
     box-shadow: var(--shadow-sm);
     transition: all var(--transition-normal);
+    border: 1px solid var(--color-light-dark);
 }
 
 .feature-card:hover {
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-xl);
     transform: translateY(-8px);
+    border-color: var(--color-primary);
 }
 
 .feature-icon {
     font-size: 3rem;
-    margin-bottom: var(--spacing-md);
-    color: var(--color-terracotta);
+    margin-bottom: var(--space-4);
+    color: var(--color-primary);
 }
 
 .feature-card h3 {
-    margin-bottom: var(--spacing-sm);
-    font-size: 1.5rem;
+    margin-bottom: var(--space-3);
+    font-size: var(--text-2xl);
+    color: var(--color-dark);
 }
 
 .feature-card p {
-    color: var(--color-gray-dark);
+    color: var(--color-text-light);
     line-height: 1.7;
 }
 
 .approach-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-2xl);
+    gap: var(--space-12);
 }
 
 .approach-item {
-    padding: var(--spacing-lg);
-    border-left: 3px solid var(--color-terracotta);
+    padding: var(--space-6);
+    border-left: 3px solid var(--color-primary);
+    background: var(--color-light);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    transition: all var(--transition-base);
+}
+
+.approach-item:hover {
+    background: var(--color-light-medium);
+    transform: translateX(8px);
 }
 
 .approach-number {
     font-size: 3rem;
-    font-weight: 700;
-    color: var(--color-terracotta);
-    margin-bottom: var(--spacing-sm);
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: var(--space-3);
     opacity: 0.3;
 }
 
 .approach-item h3 {
-    margin-bottom: var(--spacing-sm);
-    font-size: 1.25rem;
+    margin-bottom: var(--space-3);
+    font-size: var(--text-xl);
+    color: var(--color-dark);
 }
 
 .approach-item p {
-    color: var(--color-gray-dark);
+    color: var(--color-text-light);
     line-height: 1.7;
 }
 
