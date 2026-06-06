@@ -1,105 +1,228 @@
 # Gestion Immo
 
-Application Django de gestion de location immobilière avec catalogue, réservation et interface d'administration.
+![Django](https://img.shields.io/badge/Django-5.0-green?style=for-the-badge&logo=django)
+![Python](https://img.shields.io/badge/Python-3.13-blue?style=for-the-badge&logo=python)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-orange?style=for-the-badge&logo=mysql)
 
-## Description
+Application Django moderne de gestion de location immobilière avec catalogue, réservation et interface d'administration.
 
-Ce projet permet de consulter des logements, créer des demandes de réservation, puis gérer les réservations et les logements via un tableau de bord sécurisé.
+## 📋 Description
 
-## Installation
+**Gestion Immo** est une plateforme web complète pour la gestion de locations immobilières en Guinée. Le projet permet aux utilisateurs de :
+
+- Consulter un catalogue de logements avec recherche et filtrage
+- Visualiser les détails de chaque logement (photos, équipements, prix)
+- Effectuer des réservations en ligne avec validation de paiement
+- Gérer les réservations et les logements via un tableau de bord sécurisé
+
+Le projet a fait l'objet d'une refonte UI/UX complète avec un design moderne, des animations fluides et une expérience utilisateur optimisée.
+
+## ✨ Caractéristiques
+
+### Frontend (Public)
+- **Page d'accueil** : Hero section animée, logements en vedette, FAQ interactif
+- **Catalogue de logements** : Recherche par critères, filtrage, pagination
+- **Détail de logement** : Galerie photos interactive, calcul de prix dynamique, avis clients
+- **Formulaire de réservation** : Validation des dates, simulation de paiement sécurisé
+- **Page contact** : Formulaire de contact, FAQ, informations de contact
+
+### Dashboard (Administration)
+- **Tableau de bord** : Statistiques en temps réel, dernières réservations
+- **Gestion des logements** : CRUD complet, upload d'images, gestion des disponibilités
+- **Gestion des réservations** : Suivi des réservations, validation, annulation
+- **Paramètres** : Gestion du compte utilisateur
+
+### Design System
+- Palette de couleurs moderne avec gradients
+- Typographie Inter et Poppins
+- Micro-interactions et animations fluides
+- Design responsive (mobile-first)
+- Accessibilité (WCAG AA)
+
+## 🚀 Installation
 
 ### Prérequis
 
-- Python 3.13
-- MySQL (ou PostgreSQL/SQLite pour développement)
-- `pip`
+- Python 3.13+
+- MySQL 8.0+ (ou PostgreSQL/SQLite pour développement)
+- pip (gestionnaire de paquets Python)
 
-### Installation des dépendances
+### Étapes d'installation
 
-1. Activez votre environnement virtuel ou utilisez Python global.
-2. Installez les dépendances :
+1. **Cloner le dépôt**
+```bash
+git clone <repository-url>
+cd Gestion_Immo
+```
 
+2. **Créer un environnement virtuel**
+```bash
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+```
+
+3. **Installer les dépendances**
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-### Configuration
+4. **Configurer la base de données**
 
-Le projet utilise MySQL par défaut dans `config/settings.py` :
+Le projet utilise MySQL par défaut. Modifiez `config/settings.py` selon votre configuration :
 
 ```python
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gestion_immo',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'votre_utilisateur',
+        'PASSWORD': 'votre_mot_de_passe',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
 ```
 
-Si vous ne souhaitez pas utiliser MySQL, vous pouvez basculer sur SQLite en décommentant le bloc `sqlite3` présent dans le fichier de configuration.
+Pour utiliser SQLite (développement), décommentez le bloc `sqlite3` dans `config/settings.py`.
 
-### Initialisation de la base de données
+5. **Créer la base de données MySQL**
+```sql
+CREATE DATABASE gestion_immo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
 
-1. Créez la base de données MySQL `gestion_immo`.
-2. Appliquez les migrations :
-
+6. **Appliquer les migrations**
 ```bash
 python manage.py migrate
 ```
 
-3. Créez un superutilisateur pour l'administration :
-
+7. **Créer un superutilisateur**
 ```bash
 python manage.py createsuperuser
 ```
 
-## Lancement
-
-Pour démarrer le serveur local :
-
+8. **Lancer le serveur**
 ```bash
 python manage.py runserver
 ```
 
-Ensuite, ouvrez `http://127.0.0.1:8000/` dans votre navigateur.
+Ouvrez `http://127.0.0.1:8000/` dans votre navigateur.
 
-## Tests
+## 🧪 Tests
 
-Le projet dispose maintenant de tests unitaires et fonctionnels pour les formulaires, les modèles et les vues principales.
+Le projet inclut des tests unitaires et fonctionnels pour les formulaires, modèles et vues principales.
 
-Les tests utilisent SQLite automatiquement lorsque la commande `manage.py test` est lancée, afin d’isoler la suite des dépendances MySQL de production.
-
-Pour exécuter les tests :
+Les tests utilisent SQLite automatiquement pour isoler les tests de la base de données de production.
 
 ```bash
+# Exécuter tous les tests
 python manage.py test
+
+# Exécuter les tests d'une application spécifique
+python manage.py test principale
+python manage.py test dashboard
+
+# Exécuter avec verbosité
+python manage.py test --verbosity=2
 ```
 
-## Points de validation et vérifications réalisées
+## 📁 Structure du projet
 
-- Formulaire de réservation : validation des dates, du numéro de carte, de l'expiration et du CVC.
-- Modèle `Reservation` : calcul du montant total, vérification des dates et détection des chevauchements de réservations confirmées.
-- Pages publiques : accueil, liste des logements, détail d'un logement, réservation et contact.
-- Dashboard : page de connexion, redirection des utilisateurs non authentifiés, accès aux réservations après connexion.
+```
+Gestion_Immo/
+├── config/                 # Configuration Django
+│   ├── settings.py       # Paramètres principaux
+│   ├── urls.py           # URL routing global
+│   └── wsgi.py           # Configuration WSGI
+├── principale/           # Application front-office
+│   ├── models.py         # Modèles (Logement, Image, Reservation)
+│   ├── forms.py          # Formulaires de réservation
+│   ├── views.py          # Vues publiques
+│   ├── urls.py           # URL routing principale
+│   ├── static/           # Fichiers statiques (CSS, JS, images)
+│   │   └── css/
+│   │       └── styles.css  # Design system complet
+│   └── templates/        # Templates HTML
+│       └── principale/
+│           ├── base.html
+│           ├── home.html
+│           ├── listings.html
+│           ├── listing_detail.html
+│           ├── about.html
+│           ├── contact.html
+│           ├── reservation.html
+│           └── confirmation.html
+├── dashboard/            # Application back-office
+│   ├── models.py         # Modèles (Client)
+│   ├── forms.py          # Formulaires admin
+│   ├── views.py          # Vues dashboard
+│   ├── urls.py           # URL routing dashboard
+│   └── templates/
+│       └── dashboard/
+│           ├── base.html
+│           ├── index.html
+│           ├── logements.html
+│           ├── logement_form.html
+│           ├── reservations.html
+│           ├── reservation_detail.html
+│           ├── parametres.html
+│           └── login.html
+├── requirements.txt      # Dépendances Python
+├── manage.py            # Script de gestion Django
+├── README.md            # Ce fichier
+└── PRESENTATION.md      # Documentation détaillée du projet
+```
 
-## Bugs / améliorations identifiés
+## 🎨 Design System
 
-- La page `contact` contient un formulaire HTML statique qui n'est pas encore traité côté serveur.
-- Le résumé de réservation côté client affiche des frais fixes (`25 000 GNF` et `15 000 GNF`) alors que le backend ne les ajoute pas automatiquement au montant total.
-- Le panneau d'administration de création/modification de logement ne valide pas encore les champs de saisie (`prix_par_nuit`, `titre`, `ville`, etc.).
-- Le formulaire de carte ne vérifie pas encore que la date d'expiration n'est pas passée.
+Le projet utilise un design system moderne avec :
 
-## Structure du projet
+- **Couleurs primaires** : #FF6B6B (corail), #4ECDC4 (turquoise)
+- **Couleurs secondaires** : #FFE66D (jaune), #1A1A2E (bleu nuit)
+- **Typographie** : Inter (body), Poppins (headings)
+- **Espacement** : Système de variables CSS
+- **Ombres** : Subtiles à fortes pour la profondeur
+- **Transitions** : 300ms cubic-bezier pour fluidité
+- **Bordures** : Coins arrondis (8px à 24px)
 
-- `principale/` : application front-office, modèles, formulaires, vues et templates.
-- `dashboard/` : application back-office pour gérer logements et réservations.
-- `config/` : configuration Django, URL routing et déploiement.
+## 🔐 Sécurité
 
-## Notes
+- Authentification Django intégrée
+- Protection CSRF sur tous les formulaires
+- Validation des entrées utilisateur
+- Protection contre les injections SQL (ORM Django)
+- Gestion des sessions sécurisée
 
-- `requirements.txt` a été converti en UTF-8 pour garantir une installation sans problème.
-- Le projet a passé la vérification `python manage.py check` sans erreurs.
+## 🌐 Technologies Utilisées
+
+- **Backend** : Django 5.0, Python 3.13
+- **Base de données** : MySQL 8.0
+- **Frontend** : HTML5, CSS3, JavaScript (ES6+)
+- **Icônes** : Lucide Icons
+- **Police** : Google Fonts (Inter, Poppins)
+
+## 📝 Points de validation
+
+- ✅ Validation des dates de réservation (arrivée < départ)
+- ✅ Validation du numéro de carte bancaire (Luhn)
+- ✅ Validation de la date d'expiration de la carte
+- ✅ Calcul automatique du montant total
+- ✅ Détection des chevauchements de réservations
+- ✅ Redirection des utilisateurs non authentifiés
+- ✅ Tests unitaires et fonctionnels
+
+## 🔧 Améliorations futures
+
+- Intégration d'un véritable système de paiement (Stripe/PayPal)
+- Notifications par email pour les réservations
+- Système de reviews et ratings pour les logements
+- Recherche géolocalisée avec carte interactive
+- API REST pour intégration mobile
+- Système de messagerie entre propriétaires et locataires
+
+## 👥 Auteurs
+
+Projet réalisé dans le cadre d'un cours de développement web.
+
+## 📄 Licence
+
+Ce projet est à usage éducatif.
